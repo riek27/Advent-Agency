@@ -3,113 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advent Agency | Luxury Web Design for Custom Home Builders</title>
+    <title>B-win Construction & General Supply Company | Trusted Construction Experts in South Sudan</title>
+    <meta name="description" content="B-win Construction & General Supply Company Ltd: Leading construction, civil engineering, and architectural design services in Juba, South Sudan. Quality residential and commercial building solutions.">
+    <meta name="keywords" content="construction company South Sudan, Juba construction services, civil engineering South Sudan, housing construction Juba, building contractors South Sudan, architectural design Juba, construction management South Sudan, real estate development Juba">
+    <meta name="author" content="B-win Construction & General Supply Company Ltd">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="https://bwinconstruction.com">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
+
+    <!-- Header -->
+    <header>
         <div class="container nav-container">
-            <a href="index.html" class="logo">Advent<span>.</span></a>
+            <a href="index.html" class="logo"><i class="fas fa-building"></i>B-win<span>Construction</span></a>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
-                <li><a href="contact.html" class="btn btn-nav">Start Project</a></li>
-            </ul>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                        <ul class="dropdown" id="servicesDropdown">
+                            <li><a href="services.html#building"><i class="fas fa-home"></i> Building Construction</a></li>
+                            <li><a href="services.html#design"><i class="fas fa-drafting-compass"></i> Architectural Design</a></li>
+                            <li><a href="services.html#engineering"><i class="fas fa-hard-hat"></i> Civil Engineering</a></li>
+                            <li><a href="services.html#development"><i class="fas fa-city"></i> Property Development</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="projects.html" class="nav-link"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="why-choose-us.html" class="nav-link"><i class="fas fa-star"></i> Why Choose Us</a></li>
+                    <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-slides">
-            <div class="slide slide-1 active"></div>
-            <div class="slide slide-2"></div>
-            <div class="slide slide-3"></div>
-        </div>
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <h1>We Build Digital Excellence <span class="gold">For Luxury Home Builders</span></h1>
-                <p>Advent Agency crafts premium web experiences exclusively for custom home builders and luxury construction companies who demand excellence in every pixel.</p>
-                <div class="hero-buttons">
-                    <a href="services.html" class="btn btn-primary">Our Services</a>
-                    <a href="contact.html" class="btn btn-secondary">Start Project</a>
-                </div>
+        <div class="hero-content">
+            <h1>Trusted Construction & Civil Engineering Experts in South Sudan</h1>
+            <div class="typewriter-container">
+                <span class="typewriter-text" id="typewriterText"></span>
             </div>
-        </div>
-        <div class="hero-arrows">
-            <div class="hero-arrow prev-arrow">
-                <i class="fas fa-chevron-left"></i>
+            <div class="hero-buttons">
+                <a href="contact.html" class="btn"><i class="fas fa-phone-alt"></i> Contact Us</a>
+                <a href="contact.html#quote" class="btn btn-outline"><i class="fas fa-file-alt"></i> Get a Quote</a>
             </div>
-            <div class="hero-arrow next-arrow">
-                <i class="fas fa-chevron-right"></i>
-            </div>
-        </div>
-        <div class="hero-dots">
-            <div class="hero-dot active" data-slide="0"></div>
-            <div class="hero-dot" data-slide="1"></div>
-            <div class="hero-dot" data-slide="2"></div>
         </div>
     </section>
 
-    <!-- Featured Work -->
-    <section class="featured-work">
+    <!-- About Section -->
+    <section class="about-home-section">
         <div class="container">
-            <h2 class="section-title">Building Digital Excellence</h2>
-            <p class="section-subtitle">We create bespoke websites that showcase the craftsmanship and attention to detail of luxury home builders.</p>
-            
-            <div class="work-grid">
-                <div class="work-card">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2050&q=80" alt="Luxury Estate Website">
-                    </div>
-                    <div class="work-content">
-                        <h3>Summit Custom Homes</h3>
-                        <p>Complete digital transformation for a premier custom home builder specializing in mountain estates.</p>
-                        <a href="#" class="work-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
+            <div class="about-home-content fade-in">
+                <div class="about-home-image">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1470&q=80" alt="B-win Construction Team working on building project in Juba, South Sudan">
                 </div>
-                
-                <div class="work-card">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Modern Luxury Builders">
+                <div class="about-home-text">
+                    <h2>About B-win Company Ltd</h2>
+                    <p>B-win Company Ltd is a proudly South Sudanese-owned construction and civil engineering company based in Juba. We deliver reliable, affordable, and high-quality building solutions for residential, commercial, and infrastructure projects across South Sudan.</p>
+                    <p>Our professional team of engineers, architects, and skilled technicians ensures that every project is designed and built to modern standards with safety and quality at the core of everything we do.</p>
+                    <div class="about-home-stats">
+                        <div class="about-stat-item">
+                            <div class="about-stat-number">10+</div>
+                            <div class="about-stat-label">Years Experience</div>
+                        </div>
+                        <div class="about-stat-item">
+                            <div class="about-stat-number">50+</div>
+                            <div class="about-stat-label">Projects Completed</div>
+                        </div>
+                        <div class="about-stat-item">
+                            <div class="about-stat-number">100%</div>
+                            <div class="about-stat-label">Client Satisfaction</div>
+                        </div>
                     </div>
-                    <div class="work-content">
-                        <h3>Modern Luxury Builders</h3>
-                        <p>Website and digital marketing strategy for a builder focused on contemporary architectural masterpieces.</p>
-                        <a href="#" class="work-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <div class="work-card">
-                    <div class="work-image">
-                        <img src="assets/adven.jpg" alt="Heritage Custom Homes">
-                    </div>
-                    <div class="work-content">
-                        <h3>Heritage Custom Homes</h3>
-                        <p>Digital presence redesign for a builder specializing in traditional and transitional luxury homes.</p>
-                        <a href="#" class="work-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                    <a href="about.html" class="btn btn-about"><i class="fas fa-arrow-right"></i> Learn More About Us</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- Services Preview Section -->
+    <section class="services-preview-section section-bg-light">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Construction & Engineering Services</h2>
+            <p class="section-subtitle fade-in">Professional building solutions for homes, businesses, and infrastructure across South Sudan</p>
+            
+            <div class="services-preview-grid">
+                <div class="service-preview-card fade-in">
+                    <div class="service-preview-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Building Construction</h3>
+                    <p>Comprehensive construction services for residential and commercial buildings, from foundations to finishing.</p>
+                    <ul class="service-preview-list">
+                        <li><i class="fas fa-check"></i> Residential Homes</li>
+                        <li><i class="fas fa-check"></i> Commercial Buildings</li>
+                        <li><i class="fas fa-check"></i> G+1 Housing Projects</li>
+                        <li><i class="fas fa-check"></i> Real Estate Development</li>
+                    </ul>
+                </div>
+                
+                <div class="service-preview-card fade-in">
+                    <div class="service-preview-icon">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3>Architectural Design</h3>
+                    <p>Innovative and functional architectural designs tailored to client needs and local building regulations.</p>
+                    <ul class="service-preview-list">
+                        <li><i class="fas fa-check"></i> Building Design</li>
+                        <li><i class="fas fa-check"></i> Interior Design</li>
+                        <li><i class="fas fa-check"></i> 3D Visualization</li>
+                        <li><i class="fas fa-check"></i> Planning Permission</li>
+                    </ul>
+                </div>
+                
+                <div class="service-preview-card fade-in">
+                    <div class="service-preview-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Civil Engineering Works</h3>
+                    <p>Professional civil engineering solutions including site preparation, infrastructure, and structural works.</p>
+                    <ul class="service-preview-list">
+                        <li><i class="fas fa-check"></i> Site Preparation</li>
+                        <li><i class="fas fa-check"></i> Road Construction</li>
+                        <li><i class="fas fa-check"></i> Drainage Systems</li>
+                        <li><i class="fas fa-check"></i> Structural Engineering</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center fade-in">
+                <a href="services.html" class="btn btn-services"><i class="fas fa-arrow-right"></i> See All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Preview Section -->
+    <section class="projects-preview-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Projects</h2>
+            <p class="section-subtitle fade-in">We deliver modern, durable and functional building projects custom-designed to meet client needs.</p>
+            
+            <div class="projects-preview-grid">
+                <div class="project-preview-card fade-in">
+                    <div class="project-preview-image">
+                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Residential Homes Construction in Juba South Sudan">
+                        <div class="project-preview-overlay">
+                            <a href="projects.html" class="project-preview-link"><i class="fas fa-eye"></i> View Details</a>
+                        </div>
+                    </div>
+                    <div class="project-preview-info">
+                        <h3>Residential Homes — Juba</h3>
+                        <div class="project-preview-location">
+                            <i class="fas fa-map-marker-alt"></i> Juba, South Sudan
+                        </div>
+                        <p>Modern family homes designed with comfort and durability in mind, featuring quality finishing throughout.</p>
+                        <div class="project-preview-tags">
+                            <span class="project-tag">Residential</span>
+                            <span class="project-tag">Completed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-preview-card fade-in">
+                    <div class="project-preview-image">
+                        <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Commercial Building Construction South Sudan">
+                        <div class="project-preview-overlay">
+                            <a href="projects.html" class="project-preview-link"><i class="fas fa-eye"></i> View Details</a>
+                        </div>
+                    </div>
+                    <div class="project-preview-info">
+                        <h3>Commercial Building — G+1</h3>
+                        <div class="project-preview-location">
+                            <i class="fas fa-map-marker-alt"></i> Juba City Center
+                        </div>
+                        <p>Two-story commercial building with office spaces and retail units, constructed to modern business standards.</p>
+                        <div class="project-preview-tags">
+                            <span class="project-tag">Commercial</span>
+                            <span class="project-tag">Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-preview-card fade-in">
+                    <div class="project-preview-image">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Real Estate Development Project South Sudan">
+                        <div class="project-preview-overlay">
+                            <a href="projects.html" class="project-preview-link"><i class="fas fa-eye"></i> View Details</a>
+                        </div>
+                    </div>
+                    <div class="project-preview-info">
+                        <h3>Real Estate Development</h3>
+                        <div class="project-preview-location">
+                            <i class="fas fa-map-marker-alt"></i> Juba, South Sudan
+                        </div>
+                        <p>Ongoing housing development designed to provide quality living spaces with modern amenities.</p>
+                        <div class="project-preview-tags">
+                            <span class="project-tag">Development</span>
+                            <span class="project-tag">Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center fade-in">
+                <a href="projects.html" class="btn btn-projects"><i class="fas fa-arrow-right"></i> See More Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section section-bg-light">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose B-win Construction</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Experienced Engineering Team</h3>
+                    <p>Our team brings years of experience in construction and civil engineering, ensuring professional standards on every project.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Affordable & Transparent Pricing</h3>
+                    <p>We provide clear, competitive pricing with no hidden costs, making quality construction accessible to our clients.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Strong Local Expertise</h3>
+                    <p>As a South Sudanese company, we understand local conditions, regulations, and building requirements better than anyone.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Client-Focused Service</h3>
+                    <p>We prioritize clear communication and collaboration to ensure your vision is realized exactly as you imagine it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
     <section class="cta-section">
         <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Showcase Your Luxury Homes?</h2>
-                <p>Let's build a digital experience that matches the quality of your craftsmanship.</p>
-                <a href="contact.html" class="btn btn-primary">Start Your Project</a>
+            <div class="cta-content fade-in">
+                <h2>Let's Build Your Dream Project</h2>
+                <p>Contact B-win Company Ltd today for a free consultation and bring your construction project to life with quality workmanship and trusted expertise.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-cta"><i class="fas fa-calendar-alt"></i> Start Your Project</a>
+                    <a href="tel:+211926960986" class="btn btn-cta-outline">
+                        <i class="fas fa-phone"></i> Call Us: +211 926 960 986
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -117,54 +278,60 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-container">
+            <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Advent<span>.</span></div>
-                    <p>We craft premium digital experiences exclusively for luxury home builders and custom construction companies.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <div class="footer-logo">B-win<span>Construction</span></div>
+                    <p>Designing and building quality structures across South Sudan. From homes to commercial buildings — we deliver trusted results with professional standards.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="services.html">Luxury Web Design</a></li>
-                        <li><a href="services.html">Brand Development</a></li>
-                        <li><a href="services.html">Digital Marketing</a></li>
-                        <li><a href="services.html">Content Creation</a></li>
+                <div class="footer-links">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="projects.html"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                        <li><a href="why-choose-us.html"><i class="fas fa-chevron-right"></i> Why Choose Us</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
+                <div class="footer-links">
+                    <h3 class="footer-heading">Our Services</h3>
+                    <ul>
+                        <li><a href="services.html#building"><i class="fas fa-chevron-right"></i> Building Construction</a></li>
+                        <li><a href="services.html#design"><i class="fas fa-chevron-right"></i> Architectural Design</a></li>
+                        <li><a href="services.html#engineering"><i class="fas fa-chevron-right"></i> Civil Engineering Works</a></li>
+                        <li><a href="services.html#development"><i class="fas fa-chevron-right"></i> Property Development</a></li>
+                        <li><a href="services.html#consultancy"><i class="fas fa-chevron-right"></i> Construction Consultancy</a></li>
+                        <li><a href="services.html#renovation"><i class="fas fa-chevron-right"></i> Renovation & Remodeling</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Case Studies</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                <div class="footer-links footer-contact">
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <ul>
+                        <li><a href="tel:+211926960986"><i class="fas fa-phone"></i> +211 926 960 986</a></li>
+                        <li><a href="mailto:info@bwinconstruction.com"><i class="fas fa-envelope"></i> info@bwinconstruction.com</a></li>
+                        <li><a href="https://maps.google.com/?q=Juba,South+Sudan" target="_blank"><i class="fas fa-map-marker-alt"></i> Juba, South Sudan</a></li>
+                        <li><a href="https://wa.me/211926960986" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: +211 926 960 986</a></li>
+                        <li><i class="fas fa-clock"></i> Mon - Sat: 8:00 AM - 6:00 PM</li>
                     </ul>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Advent Agency. All rights reserved.</p>
+            <div class="copyright">
+                <p>© 2026 B-win Construction & General Supply Company Ltd. All rights reserved. | Juba, South Sudan</p>
             </div>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
 
     <script src="script.js"></script>
 </body>
