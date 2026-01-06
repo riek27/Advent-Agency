@@ -1,5 +1,4 @@
-// script.js - Premium Construction Website Functionality
-// Last Updated: 2026-01-06
+// script.js - Updated with enhanced functionality for about and projects pages
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===== TYPEWRITER EFFECT =====
-    // Implementation based on W3Schools tutorial[citation:1]
     function initTypewriter() {
         const typewriterElement = document.getElementById('typewriterText');
         if (!typewriterElement) return;
@@ -140,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== PROJECTS FILTER =====
+    // ===== ENHANCED PROJECTS FILTER =====
     function initProjectsFilter() {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
@@ -157,29 +155,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const filterValue = this.getAttribute('data-filter');
                 
-                // Show/hide projects based on filter
+                // Filter projects
                 projectCards.forEach(card => {
+                    // Get all categories for the card
+                    const categories = card.getAttribute('data-category');
+                    const hasMultipleCategories = categories && categories.includes(' ') || card.hasAttribute('data-category2');
+                    
+                    let shouldShow = false;
+                    
                     if (filterValue === 'all') {
+                        shouldShow = true;
+                    } else if (hasMultipleCategories) {
+                        // Check for multiple category attributes
+                        const cat1 = card.getAttribute('data-category');
+                        const cat2 = card.getAttribute('data-category2');
+                        shouldShow = cat1 === filterValue || cat2 === filterValue;
+                    } else {
+                        shouldShow = categories && categories.includes(filterValue);
+                    }
+                    
+                    // Apply animation based on filter
+                    if (shouldShow) {
                         card.style.display = 'block';
                         setTimeout(() => {
                             card.style.opacity = '1';
                             card.style.transform = 'translateY(0)';
-                        }, 10);
+                        }, 50);
                     } else {
-                        const categories = card.getAttribute('data-category');
-                        if (categories && categories.includes(filterValue)) {
-                            card.style.display = 'block';
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'translateY(0)';
-                            }, 10);
-                        } else {
-                            card.style.opacity = '0';
-                            card.style.transform = 'translateY(20px)';
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
-                        }
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
                     }
                 });
             });
@@ -189,6 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== STICKY HEADER ON SCROLL =====
     function initStickyHeader() {
         const header = document.querySelector('header');
+        if (!header) return;
+        
         let lastScrollTop = 0;
         
         window.addEventListener('scroll', function() {
@@ -215,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== FADE IN ANIMATIONS ON SCROLL =====
+    // ===== ENHANCED FADE IN ANIMATIONS ON SCROLL =====
     function initScrollAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in');
         
@@ -227,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
                     entry.target.style.animationPlayState = 'running';
                     observer.unobserve(entry.target);
                 }
@@ -239,70 +249,137 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== FORM VALIDATION (FOR FUTURE CONTACT FORM) =====
-    function initFormValidation() {
-        const forms = document.querySelectorAll('form');
+    // ===== IMAGE LAZY LOADING WITH ERROR HANDLING =====
+    function initLazyLoading() {
+        // Handle Unsplash images with proper error handling
+        const images = document.querySelectorAll('img');
         
-        forms.forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const requiredFields = form.querySelectorAll('[required]');
-                let isValid = true;
-                
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        isValid = false;
-                        field.style.borderColor = 'var(--accent)';
-                        
-                        // Add error message if not already present
-                        if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('error-message')) {
-                            const errorMsg = document.createElement('small');
-                            errorMsg.className = 'error-message';
-                            errorMsg.style.color = 'var(--accent)';
-                            errorMsg.style.display = 'block';
-                            errorMsg.style.marginTop = '5px';
-                            errorMsg.textContent = 'This field is required';
-                            field.parentNode.appendChild(errorMsg);
-                        }
-                    } else {
-                        field.style.borderColor = '';
-                        const errorMsg = field.parentNode.querySelector('.error-message');
-                        if (errorMsg) {
-                            errorMsg.remove();
-                        }
-                    }
-                });
-                
-                if (!isValid) {
-                    e.preventDefault();
-                    form.classList.add('was-validated');
-                }
+        images.forEach(img => {
+            // Add loading="lazy" for native lazy loading
+            if (!img.loading) {
+                img.loading = 'lazy';
+            }
+            
+            // Handle image load errors
+            img.addEventListener('error', function() {
+                // Set a placeholder image if original fails to load
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNlMmU4ZjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNzE4MDk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+Q29uc3RydWN0aW9uIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                this.alt = 'Image failed to load';
             });
         });
     }
     
-    // ===== IMAGE LAZY LOADING =====
-    function initLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.add('loaded');
-                        imageObserver.unobserve(img);
+    // ===== ENHANCED STATS COUNTER ANIMATION =====
+    function initStatsCounter() {
+        const statNumbers = document.querySelectorAll('.about-stat-number');
+        if (statNumbers.length === 0) return;
+        
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target;
+                    const targetValue = statNumber.textContent;
+                    
+                    // Check if it contains a plus sign
+                    if (targetValue.includes('+')) {
+                        const numericValue = parseInt(targetValue);
+                        animateNumber(statNumber, 0, numericValue, 1500, '+');
+                    } else if (targetValue === '100%' || targetValue === '95%') {
+                        const numericValue = parseInt(targetValue);
+                        animateNumber(statNumber, 0, numericValue, 1500, '%');
+                    } else {
+                        const numericValue = parseInt(targetValue);
+                        animateNumber(statNumber, 0, numericValue, 1500);
+                    }
+                    
+                    observer.unobserve(statNumber);
+                }
+            });
+        }, observerOptions);
+        
+        statNumbers.forEach(stat => {
+            observer.observe(stat);
+        });
+        
+        function animateNumber(element, start, end, duration, suffix = '') {
+            const startTime = performance.now();
+            const updateNumber = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = Math.floor(start + (end - start) * easeOutQuart);
+                
+                element.textContent = suffix === '+' ? `${currentValue}+` : 
+                                    suffix === '%' ? `${currentValue}%` : 
+                                    currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            };
+            
+            requestAnimationFrame(updateNumber);
+        }
+    }
+    
+    // ===== DROPDOWN MENU ENHANCEMENTS =====
+    function initDropdowns() {
+        const dropdowns = document.querySelectorAll('.has-dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            const dropdownMenu = dropdown.querySelector('.dropdown');
+            
+            if (link && dropdownMenu) {
+                // Desktop hover
+                dropdown.addEventListener('mouseenter', function() {
+                    if (window.innerWidth > 768) {
+                        dropdownMenu.style.opacity = '1';
+                        dropdownMenu.style.visibility = 'visible';
+                        dropdownMenu.style.transform = 'translateY(0)';
                     }
                 });
-            });
-            
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        } else {
-            // Fallback for older browsers
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                img.src = img.dataset.src;
-            });
-        }
+                
+                dropdown.addEventListener('mouseleave', function() {
+                    if (window.innerWidth > 768) {
+                        dropdownMenu.style.opacity = '0';
+                        dropdownMenu.style.visibility = 'hidden';
+                        dropdownMenu.style.transform = 'translateY(10px)';
+                    }
+                });
+                
+                // Mobile click
+                if (window.innerWidth <= 768) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const isActive = dropdownMenu.style.maxHeight && dropdownMenu.style.maxHeight !== '0px';
+                        
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown').forEach(menu => {
+                            if (menu !== dropdownMenu) {
+                                menu.style.maxHeight = '0';
+                                menu.style.padding = '0';
+                            }
+                        });
+                        
+                        if (isActive) {
+                            dropdownMenu.style.maxHeight = '0';
+                            dropdownMenu.style.padding = '0';
+                        } else {
+                            dropdownMenu.style.maxHeight = dropdownMenu.scrollHeight + 'px';
+                            dropdownMenu.style.padding = '0.5rem 0';
+                        }
+                    });
+                }
+            }
+        });
     }
     
     // ===== INITIALIZE ALL FUNCTIONS =====
@@ -313,8 +390,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initProjectsFilter();
         initStickyHeader();
         initScrollAnimations();
-        initFormValidation();
         initLazyLoading();
+        initStatsCounter();
+        initDropdowns();
         
         // Add loaded class to body for CSS transitions
         setTimeout(() => {
@@ -325,47 +403,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start everything
     initAll();
     
-    // ===== UTILITY FUNCTIONS =====
-    // Debounce function for scroll events
-    function debounce(func, wait = 20, immediate = true) {
-        let timeout;
-        return function() {
-            const context = this, args = arguments;
-            const later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    }
-    
-    // Throttle function for resize events
-    function throttle(func, limit = 100) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
-    
-    // Window resize handler
-    window.addEventListener('resize', throttle(function() {
-        // Reinitialize any layout-dependent functions
-        if (window.innerWidth > 768) {
-            // Close mobile menu if open
-            if (mainNav) {
+    // ===== WINDOW RESIZE HANDLER =====
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            // Reinitialize dropdowns on resize
+            initDropdowns();
+            
+            // Close mobile menu if open on desktop
+            if (window.innerWidth > 768 && mainNav) {
                 mainNav.classList.remove('active');
                 mobileOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
-        }
-    }, 250));
+        }, 250);
+    });
 });
