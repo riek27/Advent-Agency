@@ -1,4 +1,4 @@
-// script.js - Updated with enhanced functionality for about and projects pages
+// script.js - Fixed mobile dropdown functionality
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Close mobile menu when clicking a link
-        const navLinks = document.querySelectorAll('#mainNav a');
+        const navLinks = document.querySelectorAll('#mainNav a:not(.has-dropdown > a)');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mainNav.classList.remove('active');
@@ -31,68 +31,89 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== DROPDOWN MENU FIX - Mobile dropdown should not redirect =====
+    // ===== DROPDOWN MENU - Fixed for mobile =====
     function initDropdowns() {
-        const dropdownToggles = document.querySelectorAll('.has-dropdown > .nav-link');
-        const dropdowns = document.querySelectorAll('.dropdown');
+        const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
         
         dropdownToggles.forEach(toggle => {
-            // Remove any existing click handlers first
-            toggle.removeEventListener('click', handleDropdownClick);
+            // Remove existing event listeners to prevent duplicates
+            toggle.removeEventListener('click', handleDropdownToggle);
             
-            // Add new click handler
-            toggle.addEventListener('click', handleDropdownClick);
-        });
-        
-        // Add click handlers to dropdown links to close menu
-        const dropdownLinks = document.querySelectorAll('.dropdown a');
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    // Close the dropdown when a link is clicked on mobile
-                    const parentDropdown = this.closest('.has-dropdown');
-                    if (parentDropdown) {
-                        const dropdownMenu = parentDropdown.querySelector('.dropdown');
-                        if (dropdownMenu) {
-                            dropdownMenu.style.maxHeight = '0';
-                            dropdownMenu.style.padding = '0';
-                        }
-                    }
-                }
-            });
+            // Add new event listener
+            toggle.addEventListener('click', handleDropdownToggle);
         });
     }
     
-    // Separate function for dropdown click handling
-    function handleDropdownClick(e) {
+    // Handle dropdown toggle clicks
+    function handleDropdownToggle(e) {
+        // Only prevent default behavior on mobile
         if (window.innerWidth <= 768) {
             e.preventDefault();
             e.stopPropagation();
             
             const parent = this.parentElement;
             const dropdown = parent.querySelector('.dropdown');
+            const isActive = dropdown.style.maxHeight && dropdown.style.maxHeight !== '0px';
             
-            if (dropdown) {
-                const isActive = dropdown.style.maxHeight && dropdown.style.maxHeight !== '0px';
-                
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown').forEach(menu => {
-                    if (menu !== dropdown) {
-                        menu.style.maxHeight = '0';
-                        menu.style.padding = '0';
-                    }
-                });
-                
-                if (isActive) {
-                    dropdown.style.maxHeight = '0';
-                    dropdown.style.padding = '0';
-                } else {
-                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
-                    dropdown.style.padding = '0.5rem 0';
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown').forEach(menu => {
+                if (menu !== dropdown) {
+                    menu.style.maxHeight = '0';
+                    menu.style.padding = '0';
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
                 }
+            });
+            
+            // Toggle current dropdown
+            if (isActive) {
+                dropdown.style.maxHeight = '0';
+                dropdown.style.padding = '0';
+                dropdown.style.opacity = '0';
+                setTimeout(() => {
+                    dropdown.style.visibility = 'hidden';
+                }, 200);
+            } else {
+                dropdown.style.visibility = 'visible';
+                dropdown.style.opacity = '1';
+                dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                dropdown.style.padding = '0.5rem 0';
             }
         }
     }
+    
+    // Close dropdowns when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
+            
+            let isClickInsideDropdown = false;
+            
+            // Check if click is inside any dropdown or toggle
+            dropdowns.forEach(dropdown => {
+                if (dropdown.contains(e.target)) {
+                    isClickInsideDropdown = true;
+                }
+            });
+            
+            dropdownToggles.forEach(toggle => {
+                if (toggle.contains(e.target) || toggle === e.target) {
+                    isClickInsideDropdown = true;
+                }
+            });
+            
+            // Close all dropdowns if click is outside
+            if (!isClickInsideDropdown) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.style.maxHeight = '0';
+                    dropdown.style.padding = '0';
+                    dropdown.style.opacity = '0';
+                    dropdown.style.visibility = 'hidden';
+                });
+            }
+        }
+    });
     
     // ===== TYPEWRITER EFFECT =====
     function initTypewriter() {
@@ -119,17 +140,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!isPaused) {
                 if (!isDeleting && charIndex <= currentText.length) {
-                    // Typing
                     typewriterElement.textContent = currentText.substring(0, charIndex);
                     charIndex++;
                     setTimeout(typeWriter, typingSpeed);
                 } else if (isDeleting && charIndex >= 0) {
-                    // Deleting
                     typewriterElement.textContent = currentText.substring(0, charIndex);
                     charIndex--;
                     setTimeout(typeWriter, deletingSpeed);
                 } else if (!isDeleting && charIndex > currentText.length) {
-                    // Finished typing, pause then start deleting
                     isPaused = true;
                     setTimeout(() => {
                         isPaused = false;
@@ -137,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         typeWriter();
                     }, pauseDuration);
                 } else if (isDeleting && charIndex < 0) {
-                    // Finished deleting, move to next text
                     isDeleting = false;
                     textIndex = (textIndex + 1) % texts.length;
                     charIndex = 0;
@@ -146,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Start the typewriter effect
         setTimeout(typeWriter, 1000);
     }
     
@@ -179,8 +195,11 @@ document.addEventListener('DOMContentLoaded', function() {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 
-                // Skip if it's just "#" or if it's a dropdown link
-                if (href === '#' || href.startsWith('#servicesDropdown')) {
+                // Skip if it's just "#" or if it's a dropdown toggle on mobile
+                if (href === '#' || 
+                    (window.innerWidth <= 768 && 
+                     this.parentElement.classList.contains('has-dropdown') &&
+                     this.classList.contains('nav-link'))) {
                     return;
                 }
                 
@@ -196,6 +215,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         top: targetPosition,
                         behavior: 'smooth'
                     });
+                    
+                    // Close mobile menu if open
+                    if (mainNav && mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
                 }
             });
         });
@@ -210,17 +236,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove active class from all buttons
                 filterBtns.forEach(b => b.classList.remove('active'));
-                
-                // Add active class to clicked button
                 this.classList.add('active');
                 
                 const filterValue = this.getAttribute('data-filter');
                 
-                // Filter projects
                 projectCards.forEach(card => {
-                    // Get all categories for the card
                     const categories = card.getAttribute('data-category');
                     const hasMultipleCategories = categories && categories.includes(' ') || card.hasAttribute('data-category2');
                     
@@ -229,7 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (filterValue === 'all') {
                         shouldShow = true;
                     } else if (hasMultipleCategories) {
-                        // Check for multiple category attributes
                         const cat1 = card.getAttribute('data-category');
                         const cat2 = card.getAttribute('data-category2');
                         shouldShow = cat1 === filterValue || cat2 === filterValue;
@@ -237,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         shouldShow = categories && categories.includes(filterValue);
                     }
                     
-                    // Apply animation based on filter
                     if (shouldShow) {
                         card.style.display = 'block';
                         setTimeout(() => {
@@ -271,10 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 header.style.padding = '0.5rem 0';
                 
                 if (scrollTop > lastScrollTop && scrollTop > 200) {
-                    // Scrolling down
                     header.style.transform = 'translateY(-100%)';
                 } else {
-                    // Scrolling up
                     header.style.transform = 'translateY(0)';
                 }
             } else {
@@ -312,20 +329,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== IMAGE LAZY LOADING WITH ERROR HANDLING =====
+    // ===== IMAGE LAZY LOADING =====
     function initLazyLoading() {
-        // Handle Unsplash images with proper error handling
         const images = document.querySelectorAll('img');
         
         images.forEach(img => {
-            // Add loading="lazy" for native lazy loading
             if (!img.loading) {
                 img.loading = 'lazy';
             }
             
-            // Handle image load errors
             img.addEventListener('error', function() {
-                // Set a placeholder image if original fails to load
                 this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNlMmU4ZjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNzE4MDk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+Q29uc3RydWN0aW9uIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                 this.alt = 'Image failed to load';
             });
@@ -348,7 +361,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     const statNumber = entry.target;
                     const targetValue = statNumber.textContent;
                     
-                    // Check if it contains a plus sign
                     if (targetValue.includes('+')) {
                         const numericValue = parseInt(targetValue);
                         animateNumber(statNumber, 0, numericValue, 1500, '+');
@@ -375,7 +387,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // Easing function for smooth animation
                 const easeOutQuart = 1 - Math.pow(1 - progress, 4);
                 const currentValue = Math.floor(start + (end - start) * easeOutQuart);
                 
@@ -420,6 +431,17 @@ document.addEventListener('DOMContentLoaded', function() {
         resizeTimer = setTimeout(function() {
             // Reinitialize dropdowns on resize
             initDropdowns();
+            
+            // Reset all dropdowns when switching to desktop
+            if (window.innerWidth > 768) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    dropdown.style.maxHeight = '';
+                    dropdown.style.padding = '';
+                    dropdown.style.opacity = '';
+                    dropdown.style.visibility = '';
+                });
+            }
             
             // Close mobile menu if open on desktop
             if (window.innerWidth > 768 && mainNav) {
